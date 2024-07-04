@@ -7,18 +7,60 @@ In this respository we have created a program which is just basic code of soldit
 
 ## Description
 
-It includes three variables namely name, symbol and totalSupply. It also contains mapping address, mint functions, and burn function.
-The mint function allows the creation of new tokens and assigns them to a specified address, increasing both the total supply of tokens and the balance of that address. The burn function allows the destruction of tokens from a specified address, reducing both the total supply of tokens and the balance of that address, but only if the address has enough tokens to burn. The mint and burn functions help in managing the supply of tokens and the balances of the users in a decentralized manner.
+1. The MyToken contract declaration is initiated by this program.
+
+2.Three state variables are declared in these lines:
+Name: The token's name is represented via a public string variable.
+Symbol: The token's symbol is represented via a public string variable.
+totalSupply: The total supply of the token is represented by this public unsigned integer variable. It has a zero initialization.
+
+3.The public state variable balances, which maps addresses to unsigned integer, is declared on this line. We will use this mapping to monitor each address's token balance.
+
+4. The mint function enables the production of fresh tokens. It requires the following two parameters:
+_address: The address that will be used to receive the freshly created tokens.
+_value: The quantity of tokens to be struck.
+Within the operation:
+totalSupply += _value; this adds _value to the total supply of tokens.
+balances[_address] += _value; this adds _value to the balance of _address.
+
+5. Using the burn function in this contract we can easily burn the tokens. It requires the following two parameters:
+Tokens will be destroyed from the address indicated by _address.
+_value: The number of tokens to be destroyed.
+Within the operation:
+If the value of balances[_address] >= _value, then the _address has insufficient tokens to burn.
+TotalSupply -= _value; reduces the total supply of tokens by _value if the condition is true.
+balances[_address] -= _value; this reduces _address's balance by _value.
 
 ## Getting Started
 
 ### Executing program
 
-To run this program, you can use Remix, an online Solidity IDE. Create a new file in remix and paste the code and then compile. 
+To run this program, you can use Remix. Create a new file in remix and paste the code and then find compile on the left hand side of online compiler.
+This code is written in solidity version 0.8.26 [remember to check your version].
 
-## Authors
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.26;
+contract MyToken {
 
-Muskan Soni
+    string public Name = "Muskan Soni";
+    string public Symbol = "Muski";
+    uint public totalSupply = 0;
+
+    mapping(address=> uint) public balances;
+
+    function mint(address _address, uint _value) public {
+        totalSupply += _value;
+        balances[_address] += _value;
+    }
+
+
+    function burn(address _address, uint _value) public {
+        if(balances[_address] >= _value){
+        totalSupply -= _value;
+        balances[_address] -= _value;
+    }
+    } 
+}
 
 
 ## License
